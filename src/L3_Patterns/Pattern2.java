@@ -1,25 +1,27 @@
-package L2_Loops;
+package L3_Patterns;
 
-public class Pattern1 {
+public class Pattern2 {
 
 	public static void main(String[] args) {
 
 		int n = 5;
 
-		// rows
-		int row = 1;
+		int nst = 1;
 
+		int row = 1;
 		while (row <= n) {
 
 			// work
-			for (int col = 1; col <= n; col = col + 1) 
+			for (int col = 1; col <= nst; col = col + 1) {
 				System.out.print("*");
-						
+			}
+
+
 			// changes
 			System.out.println();
 			row = row + 1;
+			nst = nst + 1;
 
 		}
-
 	}
 }
