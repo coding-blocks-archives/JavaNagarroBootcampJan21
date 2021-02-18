@@ -68,22 +68,22 @@ public class ArrayDemo {
 
 		// case 1
 		System.out.println(one[0] + " " + two[0]);
-		swap(one[0], two[0]);
+		swap1(one[0], two[0]);
 		System.out.println(one[0] + " " + two[0]);
 
 		// case 2
 		System.out.println(one[0] + " " + two[0]);
-		// swap(one, two);
+		swap2(one, two);
 		System.out.println(one[0] + " " + two[0]);
 
 		// case 3
 		System.out.println(one[0] + " " + two[0]);
-		swap(one, two);
+		swap3(one, two);
 		System.out.println(one[0] + " " + two[0]);
 
 	}
 
-	public static void swap(int[] a, int[] b) {
+	public static void swap3(int[] a, int[] b) {
 
 		int[] temp = a;
 		a = b;
@@ -91,14 +91,14 @@ public class ArrayDemo {
 
 	}
 
-	// public static void swap(int[] a, int[] b) {
-	//
-	// int temp = a[0];
-	// a[0] = b[0];
-	// b[0] = temp;
-	// }
+	public static void swap2(int[] a, int[] b) {
 
-	public static void swap(int a, int b) {
+		int temp = a[0];
+		a[0] = b[0];
+		b[0] = temp;
+	}
+
+	public static void swap1(int a, int b) {
 
 		int temp = a;
 		a = b;
