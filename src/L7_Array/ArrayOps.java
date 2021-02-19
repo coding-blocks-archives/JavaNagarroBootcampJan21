@@ -1,5 +1,6 @@
 package L7_Array;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class ArrayOps {
@@ -9,7 +10,7 @@ public class ArrayOps {
 	public static void main(String[] args) {
 
 		// int[] a = takeInput();
-		int[] a = { 10, 20, 30, 40, 50, 60 };
+		int[] a = { 10, 20, 30, 40, 50, 60, 70, 80, 90 };
 		display(a);
 
 		// System.out.println(maximum(a));
@@ -17,8 +18,21 @@ public class ArrayOps {
 		// System.out.println(binarySearch(a, 25));
 
 		// reverse(a);
-		rotate2(a, 2);
-		display(a);
+		// rotate2(a, 2);
+
+		// int[] ans = inverse(a);
+		// display(ans);
+
+		// barGraph(a);
+
+		// subarrayPrint(a);
+
+		// subarraySum2Loops(a);
+		// System.out.println();
+		// maxSubarraySum2Loops(a);
+
+		// targetSumPair(a, 100);
+		targetSumTriplet(a, 100);
 
 	}
 
@@ -156,6 +170,160 @@ public class ArrayOps {
 		reverse(arr, arr.length - rot, arr.length - 1); // rot
 
 		reverse(arr);
+	}
+
+	public static int[] inverse(int[] arr) {
+
+		int[] res = new int[arr.length];
+
+		for (int i = 0; i < res.length; i++)
+			res[arr[i]] = i;
+
+		return res;
+
+	}
+
+	public static void barGraph(int[] arr) {
+
+		int rows = maximum(arr);
+		int cols = arr.length;
+
+		for (int r = 1; r <= rows; r++) {
+
+			for (int c = 0; c < cols; c++) {
+
+				if (r <= rows - arr[c])
+					System.out.print("  ");
+				else
+					System.out.print("| ");
+			}
+
+			System.out.println();
+		}
+
+	}
+
+	public static void subarrayPrint(int[] arr) {
+
+		for (int si = 0; si <= arr.length - 1; si++) {
+
+			for (int ei = si; ei <= arr.length - 1; ei++) {
+
+				for (int k = si; k <= ei; k++) {
+					System.out.print(arr[k] + " ");
+				}
+
+				System.out.println();
+			}
+
+		}
+	}
+
+	public static void subarraySum3Loops(int[] arr) {
+
+		for (int si = 0; si <= arr.length - 1; si++) {
+
+			for (int ei = si; ei <= arr.length - 1; ei++) {
+
+				int sum = 0;
+				for (int k = si; k <= ei; k++) {
+					sum = sum + arr[k];
+				}
+
+				System.out.println(sum);
+			}
+
+		}
+	}
+
+	public static void subarraySum2Loops(int[] arr) {
+
+		for (int si = 0; si <= arr.length - 1; si++) {
+
+			int sum = 0;
+
+			for (int ei = si; ei <= arr.length - 1; ei++) {
+
+				sum = sum + arr[ei];
+
+				System.out.println(si + "," + ei + " : " + sum);
+			}
+		}
+	}
+
+	public static void maxSubarraySum2Loops(int[] arr) {
+
+		int max = Integer.MIN_VALUE;
+
+		for (int si = 0; si <= arr.length - 1; si++) {
+
+			int sum = 0;
+
+			for (int ei = si; ei <= arr.length - 1; ei++) {
+
+				sum = sum + arr[ei];
+
+				if (sum > max)
+					max = sum;
+			}
+		}
+
+		System.out.println(max);
+	}
+
+	public static void targetSumPair(int[] arr, int target) {
+
+		// array sort
+		Arrays.sort(arr);
+
+		// logic ...
+		int i = 0;
+		int j = arr.length - 1;
+
+		while (i < j) {
+
+			if (arr[i] + arr[j] > target)
+				j--;
+			else if (arr[i] + arr[j] < target)
+				i++;
+			else {
+
+				System.out.println(arr[i] + " " + arr[j]);
+				i++;
+				j--;
+
+			}
+		}
+
+	}
+
+	public static void targetSumTriplet(int[] arr, int target) {
+
+		Arrays.sort(arr);
+
+		for (int i = 0; i < arr.length; i++) {
+
+			int nt = target - arr[i] ;
+			
+			int j = i + 1;
+			int k = arr.length - 1;
+
+			while (j < k) {
+
+				if (arr[j] + arr[k] > nt)
+					k--;
+				else if (arr[j] + arr[k] < nt)
+					j++;
+				else {
+					System.out.println(arr[i] + ", " + arr[j] + ", " + arr[k]);
+					j++;
+					k--;
+				}
+
+			}
+
+		}
+
 	}
 
 }
