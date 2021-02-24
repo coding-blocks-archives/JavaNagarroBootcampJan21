@@ -1,6 +1,7 @@
 package L7_Array;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class ArrayOps {
@@ -10,7 +11,7 @@ public class ArrayOps {
 	public static void main(String[] args) {
 
 		// int[] a = takeInput();
-		int[] a = { 10, 20, 30, 40, 50, 60, 70, 80, 90 };
+		int[] a = { 5, 4, 3, 7, 6 };
 		display(a);
 
 		// System.out.println(maximum(a));
@@ -32,7 +33,11 @@ public class ArrayOps {
 		// maxSubarraySum2Loops(a);
 
 		// targetSumPair(a, 100);
-		targetSumTriplet(a, 100);
+		// targetSumTriplet(a, 100);
+
+		// System.out.println(kadane2(a));
+
+		System.out.println(noOfTriangles2(a));
 
 	}
 
@@ -303,8 +308,8 @@ public class ArrayOps {
 
 		for (int i = 0; i < arr.length; i++) {
 
-			int nt = target - arr[i] ;
-			
+			int nt = target - arr[i];
+
 			int j = i + 1;
 			int k = arr.length - 1;
 
@@ -323,6 +328,132 @@ public class ArrayOps {
 			}
 
 		}
+
+	}
+
+	public static int kadane(int[] arr) {
+
+		int sum = arr[0];
+		int max = arr[0];
+
+		for (int i = 1; i < arr.length; i++) {
+
+			sum = Math.max(sum + arr[i], arr[i]);
+
+			if (sum > max)
+				max = sum;
+		}
+
+		return max;
+
+	}
+
+	public static int kadane2(int[] arr) {
+
+		int[] start = new int[arr.length];
+		start[0] = 0;
+
+		int ei = 0;
+
+		int sum = arr[0];
+		int max = arr[0];
+
+		for (int i = 1; i < arr.length; i++) {
+
+			int alreadyExistingAdd = sum + arr[i];
+			int freshStart = arr[i];
+
+			if (alreadyExistingAdd > freshStart)
+				start[i] = start[i - 1];
+			else
+				start[i] = i;
+
+			sum = Math.max(alreadyExistingAdd, freshStart);
+
+			if (sum > max) {
+				max = sum;
+				ei = i;
+			}
+		}
+
+		System.out.println(start[ei] + " " + ei);
+
+		return max;
+
+	}
+
+	public static int circularArrayMaxSubarraySum(int[] arr) {
+
+		// Case 1 : CE are non wrapping
+		int ceNotWrapping = kadane(arr);
+
+		// Case 2 : CE are wrapping
+		int totalSum = 0;
+
+		for (int i = 0; i < arr.length; i++) {
+			totalSum += arr[i];
+			arr[i] = -arr[i];
+		}
+
+		int nonContributingElementSum = kadane(arr);
+
+		int ceWrapping = totalSum + nonContributingElementSum;
+
+		return Math.max(ceNotWrapping, ceWrapping);
+
+	}
+
+	public static int noOfTriangles(int[] arr) {
+
+		int count = 0;
+
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = i + 1; j < arr.length; j++) {
+				for (int k = j + 1; k < arr.length; k++) {
+
+					if (arr[i] + arr[j] > arr[k] && arr[i] + arr[k] > arr[j] && arr[j] + arr[k] > arr[i]) {
+						count++;
+
+						System.out.println(arr[i] + " " + arr[j] + " " + arr[k]);
+					}
+				}
+			}
+		}
+
+		return count;
+	}
+
+	public static int noOfTriangles2(int[] arr) {
+
+		int count = 0;
+
+		Arrays.sort(arr);
+
+		// arr[i] is the largest side as of now
+		for (int i = arr.length - 1; i >= 0; i--) {
+
+			int l = 0;
+			int r = i - 1;
+
+			while (l < r) {
+
+				if (arr[l] + arr[r] > arr[i]) {
+					count += r - l;
+
+					// printing
+					// for (int k = l; k <= r - 1; k++)
+						// System.out.println(arr[k] + " " + arr[r] + " " + arr[i]);
+
+					r--;
+				} else {
+					l++;
+				}
+
+			}
+
+		}
+
+		return count;
 
 	}
 
