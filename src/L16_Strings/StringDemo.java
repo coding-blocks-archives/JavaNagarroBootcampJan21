@@ -55,22 +55,28 @@ public class StringDemo {
 		System.out.println((s1 == s2) + ", " + s1.equals(s2));
 		System.out.println((s1 == s3) + ", " + s1.equals(s3));
 		System.out.println((s1 == s4) + ", " + s1.equals(s4));
-		
-		str = str.replace('l', 'w') ;
-		
+
+		str = str.replace('l', 'w');
+
 		System.out.println(str);
 		
+		long start = System.currentTimeMillis() ;
+		append() ;
+		long end = System.currentTimeMillis() ;
+		
+		System.out.println(end-start);
+
+	}
+
+	public static void append() {
+
+		int n = 100000;
+
+		String str = "";
+
+		for (int i = 1; i <= n; i++)
+			str += i;
+
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
