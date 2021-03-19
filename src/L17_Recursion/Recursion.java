@@ -10,8 +10,10 @@ public class Recursion {
 
 //		System.out.println(factorial(4));
 //		System.out.println(power(3, 7));
-		
-		System.out.println(fibonacci(4));
+
+//		System.out.println(fibonacci(4));
+
+		ruler(3, 3);
 
 	}
 
@@ -88,9 +90,9 @@ public class Recursion {
 
 	public static int power(int b, int e) {
 
-		if(e == 0)
-			return 1 ;
-		
+		if (e == 0)
+			return 1;
+
 		int sp = power(b, e - 1);
 		int bp = sp * b;
 
@@ -99,32 +101,52 @@ public class Recursion {
 	}
 
 	public static int fibonacci(int n) {
-		
-		if(n == 0 || n == 1) {
-			return n ;
+
+		if (n == 0 || n == 1) {
+			return n;
 		}
-		
-		int fnm1 = fibonacci(n-1) ;
-		int fnm2 = fibonacci(n-2) ;
-		
-		int fn = fnm1 + fnm2 ;
-		
-		return fn ;
+
+		int fnm1 = fibonacci(n - 1);
+		int fnm2 = fibonacci(n - 2);
+
+		int fn = fnm1 + fnm2;
+
+		return fn;
 	}
 
+	public static void pattern(int tl) {
 
+		if (tl == 0)
+			return;
 
+		// sp
+		pattern(tl - 1);
 
+		// work
+		for (int i = 1; i <= tl; i++)
+			System.out.print("- ");
+		System.out.println();
 
+		// sp
+		pattern(tl - 1);
 
+	}
 
+	public static void ruler(int inch, int mtl) {
 
+		for (int j = 1; j <= mtl; j++)
+			System.out.print("- ");
+		System.out.println(0);
 
+		for (int i = 1; i <= inch; i++) {
 
+			pattern(mtl - 1);
 
+			for (int j = 1; j <= mtl; j++)
+				System.out.print("- ");
+			System.out.println(i);
 
+		}
+	}
 
 }
-
-
-
