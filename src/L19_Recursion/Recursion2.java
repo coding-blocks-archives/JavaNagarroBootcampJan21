@@ -4,14 +4,18 @@ public class Recursion2 {
 
 	public static void main(String[] args) {
 
-		int[] arr = { 10, 5, 30, 60, 30 };
+		int[] arr = { 10, 5, 30, 60, 30, 30 };
 
 //		reverseDisplay(arr, 0) ;
 //		System.out.println();
 
 //		System.out.println(max(arr, 0));
 
-		System.out.println(lastOccIndex(arr, 30, 0));
+//		System.out.println(lastOccIndex(arr, 30, 0));
+
+		int[] res = allIndexes(arr, 30, 0, 0);
+		for (int val : res)
+			System.out.println(val);
 	}
 
 	public static void display(int[] arr, int vidx) {
@@ -83,15 +87,26 @@ public class Recursion2 {
 
 	}
 
-	public static int[] allIndexes(int[] arr , int item, int vidx, int count) {
-		
-		
-		
+	public static int[] allIndexes(int[] arr, int item, int vidx, int count) {
+
+		if (vidx == arr.length) {
+
+			int[] br = new int[count];
+			return br;
+
+			// return new int[count] ;
+		}
+
+		int[] rr;
+
+		if (arr[vidx] == item) {
+			rr = allIndexes(arr, item, vidx + 1, count + 1);
+			rr[count] = vidx;
+		} else {
+			rr = allIndexes(arr, item, vidx + 1, count);
+		}
+
+		return rr;
+
 	}
 }
-
-
-
-
-
-
