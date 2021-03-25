@@ -8,7 +8,12 @@ public class Recursion3 {
 
 //		subsequencesAscii("ab", "");
 //		KPC2("145");
-		coinToss(4, "");
+//		coinToss(4, "");
+//		validParenthesis(3, 0, 0, "");
+//		climbingStairs(0, 3, "");
+//		mazePath(0, 0, 2, 2, "");
+
+		permutation("abc", "");
 	}
 
 	public static void subsequences(String ques, String ans) {
@@ -112,21 +117,79 @@ public class Recursion3 {
 
 	public static void coinToss(int n, String ans) {
 
-		if(n == 0) {
+		if (n == 0) {
 			System.out.println(ans);
-			return ;
+			return;
 		}
-		
+
 		coinToss(n - 1, ans + "H");
 		coinToss(n - 1, ans + "T");
 	}
 
+	public static void validParenthesis(int n, int open, int close, String ans) {
+
+		// +ve bc
+		if (open == n && close == n) {
+			System.out.println(ans);
+			return;
+		}
+
+		// -ve bc
+		if (open > n || close > open)
+			return;
+
+		validParenthesis(n, open + 1, close, ans + "(");
+		validParenthesis(n, open, close + 1, ans + ")");
+
+	}
+
+	public static void climbingStairs(int curr, int n, String ans) {
+
+		if (curr == n) {
+			System.out.println(ans);
+			return;
+		}
+
+		if (curr > n) {
+			return;
+		}
+
+		for (int step = 1; step <= 3; step++)
+			climbingStairs(curr + step, n, ans + step);
+
+	}
+
+	public static void mazePath(int cr, int cc, int er, int ec, String ans) {
+
+		if (cr == er && cc == ec) {
+			System.out.println(ans);
+			return;
+		}
+
+		if (cr > er || cc > ec) {
+			return;
+		}
+
+		mazePath(cr, cc + 1, er, ec, ans + "H");
+		mazePath(cr + 1, cc, er, ec, ans + "V");
+		mazePath(cr + 1, cc + 1, er, ec, ans + "D");
+	}
+
+	public static void permutation(String ques, String ans) {
+
+		if (ques.length() == 0) {
+			System.out.println(ans);
+			return;
+		}
+
+		for (int i = 0; i < ques.length(); i++) {
+
+			char ch = ques.charAt(i);
+			String roq = ques.substring(0, i) + ques.substring(i + 1);
+
+			permutation(roq, ans + ch);
+		}
+
+	}
+
 }
-
-
-
-
-
-
-
-
