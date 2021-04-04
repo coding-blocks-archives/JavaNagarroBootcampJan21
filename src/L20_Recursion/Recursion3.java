@@ -13,7 +13,15 @@ public class Recursion3 {
 //		climbingStairs(0, 3, "");
 //		mazePath(0, 0, 2, 2, "");
 
-		permutation("abc", "");
+//		permutation("abc", "");
+
+//		coinTossNoConsecutiveHead(3, "", true);
+
+//		lexicoCounting(0, 1000);
+
+		jumpingNumbers(0, 100);
+
+//		palindromePartitions("abbcbc", "");
 	}
 
 	public static void subsequences(String ques, String ans) {
@@ -189,6 +197,106 @@ public class Recursion3 {
 
 			permutation(roq, ans + ch);
 		}
+
+	}
+
+	public static void coinTossNoConsecutiveHead(int n, String ans, boolean flag) {
+
+		if (n == 0) {
+			System.out.println(ans);
+			return;
+		}
+
+		if (flag) // last element was Head
+		{
+			coinTossNoConsecutiveHead(n - 1, ans + "T", false);
+		} else // last element was Tail
+		{
+			coinTossNoConsecutiveHead(n - 1, ans + "H", true);
+			coinTossNoConsecutiveHead(n - 1, ans + "T", false);
+		}
+	}
+
+	public static void lexicoCounting(int curr, int n) {
+
+		if (curr > n)
+			return;
+
+		System.out.println(curr);
+
+		int i = 0;
+
+		if (curr == 0)
+			i = 1;
+
+		while (i <= 9) {
+			lexicoCounting(curr * 10 + i, n);
+			i++;
+		}
+
+	}
+
+	public static void jumpingNumbers(int curr, int n) {
+
+		if (curr > n)
+			return;
+
+		System.out.println(curr);
+
+		if (curr == 0) {
+
+			for (int i = 1; i <= 9; i++)
+				jumpingNumbers(i, n);
+
+		} else {
+
+			int rem = curr % 10;
+
+			if (rem != 0)
+				jumpingNumbers(curr * 10 + (rem - 1), n);
+
+			if (rem != 9)
+				jumpingNumbers(curr * 10 + (rem + 1), n);
+
+		}
+
+	}
+
+	public static void palindromePartitions(String ques, String ans) {
+
+		if (ques.length() == 0) {
+			System.out.println(ans);
+			return;
+		}
+
+		for (int i = 1; i <= ques.length(); i++) {
+
+			String part = ques.substring(0, i);
+			String roq = ques.substring(i);
+
+			if (isPalindrome(part))
+				palindromePartitions(roq, ans + part + " ");
+
+		}
+
+	}
+
+	public static boolean isPalindrome(String str) {
+
+		int i = 0;
+		int j = str.length() - 1;
+
+		while (i < j) {
+
+			if (str.charAt(i) != str.charAt(j))
+				return false;
+
+			i++;
+			j--;
+
+		}
+
+		return true;
 
 	}
 
