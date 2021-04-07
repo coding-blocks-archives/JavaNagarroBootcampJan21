@@ -58,13 +58,13 @@ public class ALDemo {
 //		System.out.println(list);
 //		
 
-		ArrayList<ArrayList<Integer>> list = new ArrayList<>();
-
-		ArrayList<Integer> t1 = new ArrayList<Integer>();
-		t1.add(10);
-		t1.add(20);
-		t1.add(30);
-		t1.add(40);
+//		ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+//
+//		ArrayList<Integer> t1 = new ArrayList<Integer>();
+//		t1.add(10);
+//		t1.add(20);
+//		t1.add(30);
+//		t1.add(40);
 
 //		ArrayList<Integer> t2 = t1 ;
 //		
@@ -73,19 +73,62 @@ public class ALDemo {
 //		
 //		System.out.println(list);
 
-		ArrayList<Integer> t2 = new ArrayList<>(t1);
+//		ArrayList<Integer> t2 = new ArrayList<>(t1);
 
 //		for(int i = 0 ; i < t1.size() ; i++)
 //		{
 //			t2.add(t1.get(i)) ;
 //		}
 
-		list.add(t1);
-		list.add(t2);
-		t2.add(100);
+//		list.add(t1);
+//		list.add(t2);
+//		t2.add(100);
+//
+//		System.out.println(list);
 
+		ArrayList<ArrayList<Integer>> list = new ArrayList<>() ;
+		
+		ArrayList<Integer> temp = new ArrayList<>() ;
+		
+		temp.add(10) ;
+		temp.add(20) ;
+		
+		list.add(new ArrayList<>(temp)) ;
+		
+		temp.add(30) ;
+		temp.add(40) ;
+		
+		list.add(new ArrayList<>(temp)) ;
+		
+		temp.add(50) ;
+		
+		list.add(new ArrayList<>(temp)) ;
+		
+		
 		System.out.println(list);
-
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 }

@@ -8,13 +8,14 @@ public class StringOps {
 
 		Scanner scn = new Scanner(System.in);
 
-		String str = scn.next();
+		// String str = scn.next();
 		// printChars(str);
 		// substrings(str);
 		// System.out.println(palindrome(str));
 		// System.out.println(countPalindromicSubstrings(str));
-		System.out.println(countPalindromicSubstrings2(str));
+		// System.out.println(countPalindromicSubstrings2(str));
 
+		reverseWords("The Sky is Blue");
 	}
 
 	public static void printChars(String str) {
@@ -104,6 +105,14 @@ public class StringOps {
 
 		return count;
 
+	}
+
+	public static void reverseWords(String str) {
+
+		String[] arr = str.split(" ");
+
+		for (int i = arr.length - 1; i >= 0; i--)
+			System.out.print(arr[i] + " ");
 	}
 
 }
