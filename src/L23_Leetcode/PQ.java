@@ -95,8 +95,6 @@ public class PQ {
 
 	}
 
-	
-
 	public static ArrayList<Integer> occurrence(String src, String pat) {
 
 		ArrayList<Integer> list = new ArrayList<Integer>();

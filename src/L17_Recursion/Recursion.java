@@ -99,6 +99,23 @@ public class Recursion {
 		return bp;
 
 	}
+	
+	public static int power2(int x, int n) {
+		
+		if(n == 0)
+			return 1 ;
+		
+		int sp = power2(x,n/2) ;
+		
+		int bp ;
+		
+		if(n % 2 == 0) 
+			bp = sp * sp ;
+		else
+			bp = sp * sp * x ;
+		
+		return bp ;
+	}
 
 	public static int fibonacci(int n) {
 
