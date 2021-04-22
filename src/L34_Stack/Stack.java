@@ -2,8 +2,8 @@ package L34_Stack;
 
 public class Stack {
 
-	int[] data;
-	int tos;
+	private int[] data;
+	private int tos;
 
 	public Stack() {
 		data = new int[5];
@@ -15,12 +15,21 @@ public class Stack {
 		tos = -1;
 	}
 
-	public void push(int item) {
+	public void push(int item) throws Exception {
+
+		if (isFull()) {
+			throw new Exception("Stack is Full.");
+		}
+
 		tos++;
 		data[tos] = item;
 	}
 
-	public int pop() {
+	public int pop() throws Exception {
+
+		if (isEmpty()) {
+			throw new Exception("Stack is Empty.");
+		}
 
 		int temp = data[tos];
 
@@ -30,7 +39,11 @@ public class Stack {
 		return temp;
 	}
 
-	public int peek() {
+	public int peek() throws Exception {
+
+		if (isEmpty()) {
+			throw new Exception("Stack is Empty.");
+		}
 
 		int temp = data[tos];
 		return temp;
@@ -49,11 +62,14 @@ public class Stack {
 	}
 
 	public void display() {
-
+		
+		System.out.println("-----------------------");
+		
 		for (int i = tos; i >= 0; i--)
-			System.out.print(data[i] + " ");	
+			System.out.print(data[i] + " ");
 
 		System.out.println();
+		System.out.println("-----------------------");
 
 	}
 

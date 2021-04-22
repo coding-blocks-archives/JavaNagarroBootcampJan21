@@ -1,10 +1,8 @@
 package L34_Stack;
 
-import java.util.ArrayList;
-
 public class SClient {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 	
 		Stack s = new Stack(3) ;
 		
@@ -14,8 +12,15 @@ public class SClient {
 		
 		s.display();
 		
-		ArrayList<Integer> list = new ArrayList<Integer>(7) ;
- 
+		System.out.println(s.peek());		
+		System.out.println(s.pop());
+		System.out.println(s.pop());
+		System.out.println(s.pop());
+		// System.out.println(s.pop());
+		
+		s.display();
+		s.push(50);
+		s.display();
 	}
 
 }
