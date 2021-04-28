@@ -2,8 +2,8 @@ package L34_Stack;
 
 public class Stack {
 
-	private int[] data;
-	private int tos;
+	protected int[] data;
+	protected int tos;
 
 	public Stack() {
 		data = new int[5];
@@ -62,9 +62,9 @@ public class Stack {
 	}
 
 	public void display() {
-		
+
 		System.out.println("-----------------------");
-		
+
 		for (int i = tos; i >= 0; i--)
 			System.out.print(data[i] + " ");
 

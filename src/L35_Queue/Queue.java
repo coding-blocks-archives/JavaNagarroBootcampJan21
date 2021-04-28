@@ -2,9 +2,9 @@ package L35_Queue;
 
 public class Queue {
 
-	private int[] data;
-	private int front;
-	private int size;
+	protected int[] data;
+	protected int front;
+	protected int size;
 
 	public Queue() {
 		data = new int[5];
