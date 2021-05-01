@@ -17,25 +17,6 @@ public class Backtracking {
 
 		// blockedMaze(board, 0, 0, "", new boolean[board.length][board[0].length]);
 
-		String word = "SEA";
-
-		// char[][] board = { { 'A', 'B', 'C', 'E' }, { 'S', 'F', 'C', 'S' }, { 'A',
-		// 'D', 'A', 'E' } };
-		//
-		// boolean res = false;
-		//
-		// for (int i = 0; i < board.length; i++) {
-		// for (int j = 0; j < board[0].length; j++) {
-		//
-		// if (board[i][j] == word.charAt(0))
-		// res = res || WordSearch2(board, i, j, word, 0, new
-		// boolean[board.length][board[0].length]);
-		//
-		// }
-		// }
-		//
-		// System.out.println(res);
-
 		// NQueen2(new boolean[4][4], 0, "");
 
 	}
