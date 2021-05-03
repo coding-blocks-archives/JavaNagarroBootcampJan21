@@ -148,12 +148,133 @@ public class LinkedList {
 
 	}
 
+	public void addAt(int idx, int item) throws Exception {
+
+		if (idx < 0 || idx > size()) {
+			throw new Exception("Invalid Index.");
+		}
+
+		if (idx == 0)
+			addFirst(item);
+
+		else if (idx == size())
+			addLast(item);
+
+		else {
+
+			// create a new node
+			Node nn = new Node();
+			nn.data = item;
+			nn.next = null;
+
+			// linking
+			Node n1 = getNodeAt(idx - 1);
+			Node n2 = getNodeAt(idx);
+
+			n1.next = nn;
+			nn.next = n2;
+
+		}
+
+	}
+
+	public int removeLast() throws Exception {
+
+		if (isEmpty()) {
+			throw new Exception("LL is Empty.");
+		}
+
+		int rv = getLast();
+
+		if (size() == 1) {
+			head = null;
+		} else {
+			Node sm2 = getNodeAt(size() - 2);
+			sm2.next = null;
+		}
+
+		return rv;
+	}
+
+	public int removeFirst() throws Exception {
+
+		if (isEmpty()) {
+			throw new Exception("LL is Empty.");
+		}
+
+		int rv = getFirst();
+
+		if (size() == 1) {
+			head = null;
+		} else {
+			head = head.next;
+		}
+
+		return rv;
+	}
+
+	public int removeAt(int idx) throws Exception {
+
+		if (isEmpty()) {
+			throw new Exception("LL is Empty.");
+		}
+
+		if (idx < 0 || idx >= size()) {
+			throw new Exception("Invalid Index.");
+		}
+
+		if (idx == 0)
+			return removeFirst();
+
+		else if (idx == size() - 1)
+			return removeLast();
+
+		else {
+
+			Node im1 = getNodeAt(idx - 1);
+			Node i = im1.next;
+			Node ip1 = i.next;
+
+			im1.next = ip1;
+
+			return i.data;
+
+		}
+
+	}
+
+	public void reverse() {
+
+		Node prev = null;
+		Node curr = head;
+
+		while (curr != null) {
+
+			Node ahead = curr.next;
+			curr.next = prev;
+
+			prev = curr;
+			curr = ahead;
+
+		}
+
+		head = prev;
+
+	}
+
+	public void reverseR() {
+		reverseR(null, head);
+	}
+
+	private void reverseR(Node prev, Node curr) {
+
+		if (curr == null) {
+			head = prev;
+			return;
+		}
+		
+		reverseR(curr, curr.next);
+		curr.next = prev;
+	}
+
 }
-
-
-
-
-
-
-
-
