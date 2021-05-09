@@ -22,16 +22,21 @@ public class LLClient {
 //		
 //		System.out.println(ll.removeFirst());
 //		ll.display();
-//		ll.addLast(70);
+		ll.addLast(70);
 //		ll.display();
 //		System.out.println(ll.removeLast()); 
 //		ll.addFirst(80);
 //		ll.display();
 //		System.out.println(ll.removeAt(2));
 //		ll.display();
-		
-		ll.reverseR() ;
+
+//		ll.reverseR2() ;
 		ll.display();
+
+		System.out.println(ll.mid());
+		System.out.println(ll.kthFromLast(5));
+		
+		ll.createDummyList(); 
 	}
 
 }
