@@ -8,10 +8,13 @@ public class ArrayOps {
 
 	static Scanner scn = new Scanner(System.in);
 
-	public static void main(String[] args) {
+	public void main(String[] args) {
 
-		// int[] a = takeInput();
-		int[] a = { 5, 4, 3, 7, 6 };
+//		ArrayOps ao = new ArrayOps() ;
+//		ao.takeInput() ;
+
+		int[] a = takeInput();
+//		int[] a = { 5, 4, 3, 7, 6 };
 		display(a);
 
 		// System.out.println(maximum(a));
@@ -442,7 +445,7 @@ public class ArrayOps {
 
 					// printing
 					// for (int k = l; k <= r - 1; k++)
-						// System.out.println(arr[k] + " " + arr[r] + " " + arr[i]);
+					// System.out.println(arr[k] + " " + arr[r] + " " + arr[i]);
 
 					r--;
 				} else {
