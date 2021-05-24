@@ -194,4 +194,131 @@ public class GenericTree {
 
 	}
 
+	public void printAtLevel(int level) {
+		printAtLevel(root, level, 0);
+	}
+
+	private void printAtLevel(Node node, int level, int count) {
+
+		if (level == count) {
+			System.out.println(node.data);
+			return;
+		}
+
+		for (Node child : node.children) {
+			printAtLevel(child, level, count + 1);
+		}
+
+	}
+
+	public void linearize() {
+		linearize(root);
+	}
+
+	private void linearize(Node node) {
+
+		for (Node child : node.children) {
+			linearize(child);
+		}
+
+		while (node.children.size() > 1) {
+
+			Node temp = node.children.remove(1);
+			Node tail = getTail(node.children.get(0));
+			tail.children.add(temp);
+
+		}
+
+	}
+
+	private Node getTail(Node node) {
+
+		if (node.children.size() == 0) {
+			return node;
+		}
+
+		return getTail(node.children.get(0));
+	}
+
+	public void display2() {
+		System.out.println("---------------------");
+		display2(root);
+		System.out.println("---------------------");
+
+	}
+
+	private void display2(Node node) {
+
+		System.out.println("Hii " + node.data);
+
+		for (int i = node.children.size() - 1; i >= 0; i--) {
+			Node child = node.children.get(i);
+
+			System.out.println("Going towards " + child.data);
+			display2(child);
+			System.out.println("Coming back from " + child.data);
+		}
+
+		System.out.println("Bye " + node.data);
+
+	}
+
+	public void preorder() {
+		preorder(root);
+		System.out.println();
+	}
+
+	private void preorder(Node node) {
+
+		System.out.print(node.data + " ");
+
+		for (Node child : node.children) {
+			preorder(child);
+		}
+
+	}
+
+	public void postorder() {
+		postorder(root);
+		System.out.println();
+	}
+
+	private void postorder(Node node) {
+
+		for (Node child : node.children) {
+			postorder(child);
+		}
+
+		System.out.print(node.data + " ");
+
+	}
+
+	public void levelOrder() {
+
+		Queue<Node> q = new LinkedList<>();
+		
+		// initial setup : add root node in queue
+		q.add(root);
+
+		// work till q is not empty
+		while (!q.isEmpty()) {
+
+			// remove the node
+			Node rn = q.remove();
+
+			// print the data of removed node
+			System.out.print(rn.data + " ");
+
+			// removed node children enqueue
+			for (Node child : rn.children) {
+				q.add(child);
+			}
+		
+
+		}
+		
+		System.out.println();
+
+	}
+
 }
