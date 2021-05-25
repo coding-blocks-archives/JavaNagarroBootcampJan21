@@ -19,13 +19,16 @@ public class GTClient {
 //		gt.printAtLevel(2);
 //		gt.linearize();
 //		gt.display();
-		
+
 //		gt.display2();
 
 		gt.preorder();
 		gt.postorder();
-		
-		gt.levelOrder(); 
+
+		gt.levelOrder();
+
+		gt.levelOrderLineWise();
+		gt.levelOrderZigZag();
 	}
 
 }

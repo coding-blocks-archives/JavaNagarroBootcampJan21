@@ -296,7 +296,7 @@ public class GenericTree {
 	public void levelOrder() {
 
 		Queue<Node> q = new LinkedList<>();
-		
+
 		// initial setup : add root node in queue
 		q.add(root);
 
@@ -313,11 +313,92 @@ public class GenericTree {
 			for (Node child : rn.children) {
 				q.add(child);
 			}
-		
 
 		}
-		
+
 		System.out.println();
+
+	}
+
+	public void levelOrderLineWise() {
+
+		Queue<Node> pq = new LinkedList<>();
+		Queue<Node> hq = new LinkedList<>();
+
+		// initial setup : add root node in queue
+		pq.add(root);
+
+		// work till q is not empty
+		while (!pq.isEmpty()) {
+
+			// remove the node
+			Node rn = pq.remove();
+
+			// print the data of removed node
+			System.out.print(rn.data + " ");
+
+			// removed node children enqueue
+			for (Node child : rn.children) {
+				hq.add(child);
+			}
+
+			// check of primary queue is empty -> level finish
+			if (pq.isEmpty()) {
+				System.out.println();
+
+				Queue<Node> temp = pq;
+				pq = hq;
+				hq = temp;
+
+			}
+
+		}
+
+	}
+
+	public void levelOrderZigZag() {
+
+		int count = 0;
+
+		Stack<Node> ps = new Stack<>();
+		Stack<Node> hs = new Stack<>();
+
+		// initial setup : add root node in primary stack
+		ps.add(root);
+
+		// work till stack is not empty
+		while (!ps.isEmpty()) {
+
+			// remove the node
+			Node rn = ps.pop();
+
+			// print the data of removed node
+			System.out.print(rn.data + " ");
+
+			if (count % 2 == 0) {
+				for (Node child : rn.children) {
+					hs.push(child);
+				}
+			} else {
+				for (int i = rn.children.size() - 1; i >= 0; i--) {
+					Node child = rn.children.get(i);
+					hs.push(child);
+				}
+			}
+
+			// check of primary queue is empty -> level finish
+			if (ps.isEmpty()) {
+				System.out.println();
+
+				Stack<Node> temp = ps;
+				ps = hs;
+				hs = temp;
+
+				count++;
+
+			}
+
+		}
 
 	}
 
