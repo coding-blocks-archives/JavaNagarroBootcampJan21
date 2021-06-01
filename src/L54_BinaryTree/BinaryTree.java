@@ -1,6 +1,12 @@
 package L54_BinaryTree;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class BinaryTree {
 
@@ -328,6 +334,286 @@ public class BinaryTree {
 		sbp.ht = Math.max(lbp.ht, rbp.ht) + 1;
 
 		return sbp;
+
+	}
+
+	public boolean flipEquivalent(BinaryTree other) {
+		return flipEqivalent(root, other.root);
+	}
+
+	private boolean flipEqivalent(Node n1, Node n2) {
+
+		if (n1 == null && n2 == null)
+			return true;
+
+		if (n1 == null || n2 == null)
+			return false;
+
+		if (n1.data != n2.data)
+			return false;
+
+		boolean flip = flipEqivalent(n1.left, n2.right) && flipEqivalent(n1.right, n2.left);
+
+		if (flip)
+			return true;
+
+		boolean noflip = flipEqivalent(n1.left, n2.left) && flipEqivalent(n1.right, n2.right);
+
+		return flip || noflip;
+
+	}
+
+	public void display2() {
+
+		display2(root);
+
+	}
+
+	private void display2(Node node) {
+
+		if (node == null)
+			return;
+
+		System.out.println("hii " + node.data);
+
+		display2(node.left);
+		System.out.println("Coming back from lc and going towards rc of " + node.data);
+		display2(node.right);
+
+		System.out.println("bye " + node.data);
+
+	}
+
+	// NLR : preorder
+	// LRN : postorder
+	// LNR : inorder
+	// NRL : rev postorder
+	// RLN : rev preorder
+	// RNL : rev inorder
+	public void preorder() {
+		preorder(root);
+		System.out.println();
+	}
+
+	private void preorder(Node node) {
+
+		if (node == null)
+			return;
+
+		// N
+		System.out.print(node.data + " ");
+
+		// L
+		preorder(node.left);
+
+		// R
+		preorder(node.right);
+
+	}
+
+	private class Pair {
+		Node n;
+		boolean sd;
+		boolean ld;
+		boolean rd;
+	}
+
+	public void preorderI() {
+
+		// create a stack
+		Stack<Pair> s = new Stack<>();
+
+		// Make a pair with root node
+		Pair sp = new Pair();
+		sp.n = root;
+
+		// Put the starting pair in stack
+		s.push(sp);
+
+		// work till stack is not empty
+		while (!s.isEmpty()) {
+
+			Pair tp = s.peek();
+
+			// N
+			if (tp.sd == false) {
+				System.out.print(tp.n.data + " ");
+				tp.sd = true;
+			}
+
+			// L
+			else if (tp.ld == false) {
+
+				Pair np = new Pair();
+				np.n = tp.n.left;
+
+				if (np.n != null)
+					s.push(np);
+
+				tp.ld = true;
+
+			}
+
+			// R
+			else if (tp.rd == false) {
+
+				Pair np = new Pair();
+				np.n = tp.n.right;
+
+				if (np.n != null)
+					s.push(np);
+
+				tp.rd = true;
+
+			}
+
+			// work complete : pop
+			else {
+
+				s.pop();
+
+			}
+		}
+
+		System.out.println();
+
+	}
+
+	public int sum() {
+		return sum(root);
+	}
+
+	private int sum(Node node) {
+
+		if (node == null) {
+			return 0;
+		}
+
+		int ls = sum(node.left);
+		int rs = sum(node.right);
+
+		return ls + rs + node.data;
+	}
+
+	private int mss = Integer.MIN_VALUE;
+
+	public int maxSubtreeSum1() {
+		maxSubtreeSum1(root);
+		return mss;
+	}
+
+	private void maxSubtreeSum1(Node node) {
+
+		if (node == null)
+			return;
+
+		maxSubtreeSum1(node.left);
+		maxSubtreeSum1(node.right);
+
+		int pnsum = sum(node.left) + sum(node.right) + node.data;
+
+		if (pnsum > mss)
+			mss = pnsum;
+
+	}
+
+	public int maxSubtreeSum2() {
+		return maxSubtreeSum2(root);
+	}
+
+	private int maxSubtreeSum2(Node node) {
+
+		if (node == null) {
+			return Integer.MIN_VALUE;
+		}
+
+		int lmss = maxSubtreeSum2(node.left);
+		int rmss = maxSubtreeSum2(node.right);
+
+		int pnsum = sum(node.left) + sum(node.right) + node.data;
+
+		return Math.max(pnsum, Math.max(lmss, rmss));
+	}
+
+	private class MSSPair {
+		int mss = Integer.MIN_VALUE;
+		int es = 0;
+	}
+
+	public int maxSubtreeSum3() {
+		return maxSubtreeSum3(root).mss;
+	}
+
+	private MSSPair maxSubtreeSum3(Node node) {
+
+		if (node == null)
+			return new MSSPair();
+
+		MSSPair lmssp = maxSubtreeSum3(node.left);
+		MSSPair rmssp = maxSubtreeSum3(node.right);
+
+		MSSPair smssp = new MSSPair();
+
+		// mss
+		smssp.mss = Math.max(lmssp.es + rmssp.es + node.data, Math.max(lmssp.mss, rmssp.mss));
+
+		// es
+		smssp.es = lmssp.es + rmssp.es + node.data;
+
+		return smssp;
+
+	}
+
+	private class VOPair {
+		Node n;
+		int vl;
+
+		public VOPair(Node n, int vl) {
+			this.n = n;
+			this.vl = vl;
+		}
+	}
+
+	public void verticalTraversal() {
+
+		HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
+		Queue<VOPair> q = new LinkedList<>();
+
+		VOPair sp = new VOPair(root, 0);
+		q.add(sp);
+
+		while (!q.isEmpty()) {
+
+			// remove
+			VOPair rp = q.remove();
+
+			// check if entry is already present with rp.vl ? If no, then make an entry
+			if (!map.containsKey(rp.vl))
+				map.put(rp.vl, new ArrayList<>());
+
+			// add the data of node in map
+			map.get(rp.vl).add(rp.n.data);
+
+			// left child
+			if (rp.n.left != null) {
+				VOPair left = new VOPair(rp.n.left, rp.vl - 1);
+				q.add(left);
+			}
+
+			// right child
+			if (rp.n.right != null) {
+				VOPair right = new VOPair(rp.n.right, rp.vl + 1);
+				q.add(right);
+			}
+
+		}
+
+		ArrayList<Integer> keys = new ArrayList<>(map.keySet());
+		Collections.sort(keys);
+
+		for (int key : keys) {
+			System.out.println(key + " -> " + map.get(key));
+		}
 
 	}
 
