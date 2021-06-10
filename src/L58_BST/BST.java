@@ -230,42 +230,109 @@ public class BST {
 	}
 
 	public void add3(int item) {
-		root = add3(root, item) ;
+		root = add3(root, item);
 	}
-	
+
 	private Node add3(Node node, int item) {
-		
-		if(node == null) {
-			Node nn = new Node() ;
-			nn.data = item ;
-			return nn ;			
+
+		if (node == null) {
+			Node nn = new Node();
+			nn.data = item;
+			return nn;
 		}
-		
+
 		// left
-		if(item <= node.data) {
-			node.left = add3(node.left, item) ;
+		if (item <= node.data) {
+			node.left = add3(node.left, item);
 		}
 		// right
-		else{
-			node.right = add3(node.right, item) ;
+		else {
+			node.right = add3(node.right, item);
 		}
-		
-		return node ;
-		
+
+		return node;
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public void remove(int item) {
+
+		if (root == null)
+			return;
+
+		if (item == root.data) {
+
+			if (root.left == null && root.right == null) {
+				root = null;
+			} else if (root.left != null && root.right == null) {
+				root = root.left;
+			} else if (root.left == null && root.right != null) {
+				root = root.right;
+			} else {
+				remove(root, null, item);				
+			}
+
+		} else {
+			remove(root, null, item);
+		}
+	}
+
+	private void remove(Node node, Node parent, int item) {
+
+		if (item < node.data) {
+			remove(node.left, node, item);
+		} else if (item > node.data) {
+			remove(node.right, node, item);
+		} else {
+
+			// leaf node
+			if (node.left == null && node.right == null) {
+
+				// left child
+				if (node.data <= parent.data) {
+					parent.left = null;
+				}
+				// right
+				else {
+					parent.right = null;
+				}
+			}
+
+			else if (node.left == null && node.right != null) {
+
+				// left child
+				if (node.data <= parent.data) {
+					parent.left = node.right;
+				}
+				// right
+				else {
+					parent.right = node.right;
+				}
+
+			}
+
+			else if (node.left != null && node.right == null) {
+
+				// left child
+				if (node.data <= parent.data) {
+					parent.left = node.left;
+				}
+				// right
+				else {
+					parent.right = node.left;
+				}
+
+			}
+
+			else {
+
+				int max = max(node.left);
+				remove(node.left, node, max);
+				node.data = max;
+
+			}
+
+		}
+
+	}
+
 }

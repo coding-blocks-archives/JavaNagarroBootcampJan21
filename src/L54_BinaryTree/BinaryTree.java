@@ -66,9 +66,9 @@ public class BinaryTree {
 
 	private Node construct(int[] pre, int plo, int phi, int[] in, int ilo, int ihi) {
 
-		if(plo > phi || ilo > ihi)
-			return null ;
-		
+		if (plo > phi || ilo > ihi)
+			return null;
+
 		Node nn = new Node();
 		nn.data = pre[plo];
 
@@ -87,8 +87,8 @@ public class BinaryTree {
 
 		nn.left = construct(pre, plo + 1, plo + nel, in, ilo, si - 1);
 		nn.right = construct(pre, plo + nel + 1, phi, in, si + 1, ihi);
-		
-		return nn ;
+
+		return nn;
 
 	}
 
@@ -649,4 +649,168 @@ public class BinaryTree {
 
 	}
 
+	public int min() {
+		return min(root);
+	}
+
+	private int min(Node node) {
+
+		if (node == null) {
+			return Integer.MAX_VALUE;
+		}
+
+		int lm = min(node.left);
+		int rm = min(node.right);
+
+		return Math.min(node.data, Math.min(lm, rm));
+
+	}
+
+	private boolean isBST = true;
+
+	public boolean isBST1() {
+		isBST1(root);
+
+		return isBST;
+	}
+
+	private void isBST1(Node node) {
+
+		if (node == null)
+			return;
+
+		isBST1(node.left);
+		isBST1(node.right);
+
+		int leftMax = max(node.left);
+		int rightMin = min(node.right);
+
+		if (!(node.data > leftMax && node.data < rightMin)) {
+			isBST = false;
+		}
+
+	}
+
+	public boolean isBST2() {
+		return isBST2(root);
+	}
+
+	private boolean isBST2(Node node) {
+
+		if (node == null) {
+			return true;
+		}
+
+		boolean lbst = isBST2(node.left);
+		boolean rbst = isBST2(node.right);
+
+		int leftMax = max(node.left);
+		int rightMin = min(node.right);
+
+		if (lbst && rbst && node.data > leftMax && node.data < rightMin) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	private class BSTPair {
+		boolean isBST = true;
+		int max = Integer.MIN_VALUE;
+		int min = Integer.MAX_VALUE;
+	}
+
+	public boolean isBST3() {
+		return isBST3(root).isBST;
+	}
+
+	private BSTPair isBST3(Node node) {
+
+		if (node == null) {
+			return new BSTPair();
+		}
+
+		BSTPair lp = isBST3(node.left);
+		BSTPair rp = isBST3(node.right);
+
+		BSTPair sp = new BSTPair();
+
+		// isBST
+		int leftMax = lp.max;
+		int rightMin = rp.min;
+
+		if (lp.isBST && rp.isBST && node.data > leftMax && node.data < rightMin) {
+			sp.isBST = true;
+		} else {
+			sp.isBST = false;
+		}
+
+		// max
+		sp.max = Math.max(node.data, Math.max(lp.max, rp.max));
+
+		// min
+		sp.min = Math.min(node.data, Math.min(lp.min, rp.min));
+
+		return sp;
+
+	}
+
+	private class LBSTPair {
+		boolean isBST = true;
+		int max = Integer.MIN_VALUE;
+		int min = Integer.MAX_VALUE;
+
+		int largestBSTRootNode;
+		int size = 0;
+	}
+
+	public void largestBST() {
+		LBSTPair res = largestBST(root);
+		System.out.println(res.largestBSTRootNode + " " + res.size);
+	}
+
+	private LBSTPair largestBST(Node node) {
+
+		if (node == null) {
+			return new LBSTPair();
+		}
+
+		LBSTPair lp = largestBST(node.left);
+		LBSTPair rp = largestBST(node.right);
+
+		LBSTPair sp = new LBSTPair();
+
+		// isBST
+		int leftMax = lp.max;
+		int rightMin = rp.min;
+
+		if (lp.isBST && rp.isBST && node.data > leftMax && node.data < rightMin) {
+			sp.isBST = true;
+
+			sp.largestBSTRootNode = node.data;
+			sp.size = lp.size + rp.size + 1;
+
+		} else {
+			sp.isBST = false;
+
+			if (lp.size >= rp.size) {
+				sp.largestBSTRootNode = lp.largestBSTRootNode;
+				sp.size = lp.size;
+			} else {
+				sp.largestBSTRootNode = rp.largestBSTRootNode;
+				sp.size = rp.size;
+			}
+
+		}
+
+		// max
+		sp.max = Math.max(node.data, Math.max(lp.max, rp.max));
+
+		// min
+		sp.min = Math.min(node.data, Math.min(lp.min, rp.min));
+
+		return sp;
+
+	}
 }
