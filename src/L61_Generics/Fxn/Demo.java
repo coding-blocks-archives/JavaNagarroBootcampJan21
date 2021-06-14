@@ -25,10 +25,10 @@ public class Demo {
 		// display(cars) ;
 
 		// bubbleSort(cars, new CarSpeedComparator());
-		
-		bubbleSort(arr, new IntegerComparator());
-		display(arr) ;
 
+		bubbleSort(arr, new IntegerComparator());
+		display(arr);
+		
 	}
 
 	// no comparison required

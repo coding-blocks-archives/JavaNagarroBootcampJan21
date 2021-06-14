@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
@@ -813,4 +814,74 @@ public class BinaryTree {
 		return sp;
 
 	}
+
+	private class VOPair2 implements Comparable<VOPair2> {
+		int data;
+		int hl;
+
+		@Override
+		public String toString() {
+			return data + "->" + hl;
+		}
+
+		@Override
+		public int compareTo(VOPair2 o) {
+
+			// sort data basis
+			if (this.hl - o.hl == 0) {
+				return this.data - o.data ;
+			} 
+			// sort hl basis
+			else {
+				return this.hl - o.hl;
+			}
+		}
+
+	}
+
+	public List<List<Integer>> verticalTraversal2() {
+		
+		List<List<Integer>> ans = new ArrayList<>() ;
+		
+		HashMap<Integer, ArrayList<VOPair2>> map = new HashMap<>();
+		verticalTraversal2(root, 0, 0, map);
+
+		ArrayList<Integer> keys = new ArrayList<>(map.keySet());
+		Collections.sort(keys);
+
+		for (int key : keys) {
+			ArrayList<VOPair2> temp = map.get(key);
+			Collections.sort(temp);
+			
+			ArrayList<Integer> tempdata = new ArrayList<>() ;
+			for(VOPair2 pair : temp) {
+				tempdata.add(pair.data) ;
+			}
+			
+			ans.add(tempdata) ;
+		}
+
+		return ans ;
+	}
+
+	private void verticalTraversal2(Node node, int vl, int hl, HashMap<Integer, ArrayList<VOPair2>> map) {
+
+		if (node == null) {
+			return;
+		}
+
+		if (!map.containsKey(vl)) {
+			map.put(vl, new ArrayList<>());
+		}
+
+		VOPair2 np = new VOPair2();
+		np.data = node.data;
+		np.hl = hl;
+		map.get(vl).add(np);
+
+		verticalTraversal2(node.left, vl - 1, hl + 1, map);
+		verticalTraversal2(node.right, vl + 1, hl + 1, map);
+
+	}
+
 }

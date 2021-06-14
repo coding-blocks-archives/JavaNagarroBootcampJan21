@@ -1,6 +1,6 @@
 package L61_Generics.Fxn;
 
-public class Car {// implements Comparable<Car> {
+public class Car implements Comparable<Car> {
 
 	int speed;
 	int price;
@@ -18,18 +18,18 @@ public class Car {// implements Comparable<Car> {
 		return "S:" + speed + "\tP:" + price + "\tC:" + color;
 	}
 
-//	@Override
-//	public int compareTo(Car other) {
-//
-//		// speed
-//		return this.speed - other.speed;
-//		
-//		// price
-//		// return other.price - this.price ;
-//		
-//		// color
-//		// return this.color.compareTo(other.color) ;
-//	}
+	@Override
+	public int compareTo(Car other) {
+
+		// speed
+		return this.speed - other.speed;
+		
+		// price
+		// return other.price - this.price ;
+		
+		// color
+		// return this.color.compareTo(other.color) ;
+	}
 
 }
 
