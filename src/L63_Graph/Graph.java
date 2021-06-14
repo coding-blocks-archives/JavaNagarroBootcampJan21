@@ -1,5 +1,6 @@
 package L63_Graph;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -193,10 +194,10 @@ public class Graph {
 
 		// for every src do the work
 		for (int src = 1; src <= map.size(); src++) {
-			
-			if(visited.contains(src))
-				continue ;
-			
+
+			if (visited.contains(src))
+				continue;
+
 			// initial setup
 			q.add(src);
 
@@ -226,7 +227,7 @@ public class Graph {
 			}
 
 		}
-		
+
 		System.out.println();
 
 	}
@@ -238,10 +239,10 @@ public class Graph {
 
 		// for every src do the work
 		for (int src = 1; src <= map.size(); src++) {
-			
-			if(visited.contains(src))
-				continue ;
-			
+
+			if (visited.contains(src))
+				continue;
+
 			// initial setup
 			s.push(src);
 
@@ -271,8 +272,218 @@ public class Graph {
 			}
 
 		}
-		
+
 		System.out.println();
+
+	}
+
+	public boolean isCyclic() {
+
+		Set<Integer> visited = new HashSet<>();
+		Queue<Integer> q = new LinkedList<>();
+
+		// for every src do the work
+		for (int src = 1; src <= map.size(); src++) {
+
+			if (visited.contains(src))
+				continue;
+
+			// initial setup
+			q.add(src);
+
+			// work till q is not empty
+			while (!q.isEmpty()) {
+
+				// q remove
+				int rn = q.remove();
+
+				// ignore if the node is already visited
+				if (visited.contains(rn))
+					return true;
+
+				// visited
+				visited.add(rn);
+
+				// nbrs
+				for (int nbr : map.get(rn).keySet()) {
+
+					if (!visited.contains(nbr))
+						q.add(nbr);
+				}
+
+			}
+
+		}
+
+		return false;
+
+	}
+
+	public boolean isConnected() {
+
+		int comp = 0;
+
+		Set<Integer> visited = new HashSet<>();
+		Queue<Integer> q = new LinkedList<>();
+
+		// for every src do the work
+		for (int src = 1; src <= map.size(); src++) {
+
+			if (visited.contains(src))
+				continue;
+
+			comp++;
+
+			// initial setup
+			q.add(src);
+
+			// work till q is not empty
+			while (!q.isEmpty()) {
+
+				// q remove
+				int rn = q.remove();
+
+				// ignore if the node is already visited
+				if (visited.contains(rn))
+					continue;
+
+				// visited
+				visited.add(rn);
+
+				// nbrs
+				for (int nbr : map.get(rn).keySet()) {
+
+					if (!visited.contains(nbr))
+						q.add(nbr);
+				}
+
+			}
+
+		}
+
+		return comp == 1;
+
+	}
+
+	public boolean isTree() {
+		return !isCyclic() && isConnected();
+	}
+
+	public ArrayList<ArrayList<Integer>> getCC() {
+
+		ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+
+		Set<Integer> visited = new HashSet<>();
+		Queue<Integer> q = new LinkedList<>();
+
+		// for every src do the work
+		for (int src = 1; src <= map.size(); src++) {
+
+			if (visited.contains(src))
+				continue;
+
+			// new component area
+			ArrayList<Integer> comp = new ArrayList<>();
+
+			// initial setup
+			q.add(src);
+
+			// work till q is not empty
+			while (!q.isEmpty()) {
+
+				// q remove
+				int rn = q.remove();
+
+				// ignore if the node is already visited
+				if (visited.contains(rn))
+					continue;
+
+				// visited
+				visited.add(rn);
+
+				// work
+				comp.add(rn);
+
+				// nbrs
+				for (int nbr : map.get(rn).keySet()) {
+
+					if (!visited.contains(nbr))
+						q.add(nbr);
+				}
+
+			}
+
+			ans.add(comp);
+
+		}
+
+		return ans;
+
+	}
+
+	private class Pair {
+		int node;
+		char color;
+
+		public Pair(int node, char color) {
+			this.node = node;
+			this.color = color;
+		}
+	}
+
+	public boolean bipartite() {
+
+		HashMap<Integer, Character> visited = new HashMap<>();
+		Queue<Pair> q = new LinkedList<>();
+
+		// for every src do the work
+		for (int src = 1; src <= map.size(); src++) {
+
+			if (visited.containsKey(src))
+				continue;
+
+			// initial setup
+			Pair sp = new Pair(src, 'R');
+			q.add(sp);
+
+			// work till q is not empty
+			while (!q.isEmpty()) {
+
+				// q remove
+				Pair rp = q.remove();
+
+				// ignore if the node is already visited
+				// if condn comes out to be true -> cycle -> risk
+				if (visited.containsKey(rp.node)) {
+					
+					char oc = visited.get(rp.node) ;
+					char nc = rp.color ;
+					
+					if(oc != nc) 
+						return false ;
+					
+					continue ;
+				}
+
+				// visited
+				visited.put(rp.node, rp.color);
+
+				// nbrs
+				for (int nbr : map.get(rp.node).keySet()) {
+
+					if (!visited.containsKey(nbr)) {
+
+						char nbrColor = (rp.color == 'R' ? 'G' : 'R');
+						Pair np = new Pair(nbr, nbrColor);
+						q.add(np);
+					}
+				}
+
+			}
+
+		}
+
+		return true ;
 
 	}
 

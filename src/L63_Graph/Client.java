@@ -20,7 +20,9 @@ public class Client {
 //		System.out.println(g.numEdges());		
 //		System.out.println(g.containsEdge(3, 4));
 //		g.removeEdge(4, 5);
-//		g.display();
+//		g.removeEdge(2, 3);
+		g.removeEdge(6, 7);
+		// g.display();
 //		System.out.println(g.containsEdge(3, 4));
 //		System.out.println(g.numEdges());	
 //		
@@ -28,10 +30,17 @@ public class Client {
 //		
 //		g.printAllPaths(1, 6, new HashSet<>(), "1");
 
-		System.out.println(g.BFS(1, 6));
-		System.out.println(g.DFS(1, 6));
-		
-		g.BFT();
-		g.DFT(); 
+//		System.out.println(g.BFS(1, 6));
+//		System.out.println(g.DFS(1, 6));
+//		
+//		g.BFT();
+//		g.DFT(); 
+
+		System.out.println(g.isCyclic());
+		System.out.println(g.isConnected());
+		System.out.println(g.isTree());
+		System.out.println(g.getCC());
+		System.out.println(g.bipartite());
+
 	}
 }
