@@ -1,9 +1,11 @@
 package L63_Graph;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
@@ -455,14 +457,14 @@ public class Graph {
 				// ignore if the node is already visited
 				// if condn comes out to be true -> cycle -> risk
 				if (visited.containsKey(rp.node)) {
-					
-					char oc = visited.get(rp.node) ;
-					char nc = rp.color ;
-					
-					if(oc != nc) 
-						return false ;
-					
-					continue ;
+
+					char oc = visited.get(rp.node);
+					char nc = rp.color;
+
+					if (oc != nc)
+						return false;
+
+					continue;
 				}
 
 				// visited
@@ -483,7 +485,264 @@ public class Graph {
 
 		}
 
-		return true ;
+		return true;
+
+	}
+
+	public class DisjointSet {
+
+		HashMap<Integer, Node> mapping = new HashMap<>();
+
+		private class Node {
+			int data;
+			Node parent;
+			int rank;
+
+		}
+
+		// given a value, you need to create a set
+		public void createSet(int value) {
+
+			Node nn = new Node();
+			nn.data = value;
+			nn.parent = nn;
+			nn.rank = 0;
+
+			mapping.put(value, nn);
+
+		}
+
+		// union the sets in which value1 and value2 is present
+		public void unionSet(int value1, int value2) {
+
+			Node n1 = mapping.get(value1);
+			Node n2 = mapping.get(value2);
+
+			Node re1 = findSet(n1);
+			Node re2 = findSet(n2);
+
+			// same set
+			if (re1 == re2) {
+				return;
+			}
+			// different se
+			else {
+
+				if (re1.rank > re2.rank)
+					re2.parent = re1;
+				else if (re1.rank < re2.rank)
+					re1.parent = re2;
+				else {
+
+					re2.parent = re1;
+					re1.rank++;
+				}
+			}
+
+		}
+
+		// given a value, you need to tell the representative element of set
+		public int findSet(int value) {
+			Node node = mapping.get(value);
+			return findSet(node).data;
+		}
+
+		private Node findSet(Node node) {
+
+			if (node.parent == node) {
+				return node;
+			}
+
+			Node rr = findSet(node.parent);
+			node.parent = rr;
+			return rr;
+		}
+
+	}
+
+	private class EdgePair implements Comparable<EdgePair> {
+
+		int v1;
+		int v2;
+		int cost;
+
+		public EdgePair(int v1, int v2, int cost) {
+			this.v1 = v1;
+			this.v2 = v2;
+			this.cost = cost;
+		}
+
+		@Override
+		public int compareTo(EdgePair o) {
+			return this.cost - o.cost;
+		}
+
+		@Override
+		public String toString() {
+			return v1 + " - " + v2 + " @ " + cost;
+		}
+	}
+
+	public ArrayList<EdgePair> getAllEdges() {
+
+		ArrayList<EdgePair> edges = new ArrayList<>();
+
+		for (int i = 1; i <= map.size(); i++) {
+
+			for (int nbr : map.get(i).keySet()) {
+
+				EdgePair ep = new EdgePair(i, nbr, map.get(i).get(nbr));
+				edges.add(ep);
+			}
+		}
+
+		return edges;
+	}
+
+	public void kruskal() {
+
+		ArrayList<EdgePair> edges = getAllEdges();
+		Collections.sort(edges);
+
+		DisjointSet ds = new DisjointSet();
+		for (int i = 1; i <= map.size(); i++) {
+			ds.createSet(i);
+		}
+
+		for (EdgePair edge : edges) {
+
+			int re1 = ds.findSet(edge.v1);
+			int re2 = ds.findSet(edge.v2);
+
+			if (re1 != re2) {
+				ds.unionSet(edge.v1, edge.v2);
+				System.out.println(edge);
+			}
+
+		}
+
+	}
+
+	private class PrimsPair implements Comparable<PrimsPair> {
+		int vname;
+		int avname;
+		int cost;
+
+		public PrimsPair(int vname, int avname, int cost) {
+
+			this.vname = vname;
+			this.avname = avname;
+			this.cost = cost;
+		}
+
+		@Override
+		public String toString() {
+			return vname + " via " + avname + " @ " + cost;
+		}
+
+		@Override
+		public int compareTo(PrimsPair o) {
+			return this.cost - o.cost;
+		}
+	}
+
+	public void prims() {
+
+		boolean[] visited = new boolean[map.size() + 1];
+
+		PriorityQueue<PrimsPair> pq = new PriorityQueue<>();
+
+		PrimsPair sp = new PrimsPair(1, 0, 0);
+		pq.add(sp);
+
+		while (!pq.isEmpty()) {
+
+			// remove
+			PrimsPair rp = pq.remove();
+
+			// already visited , ignore
+			if (visited[rp.vname])
+				continue;
+
+			// visited
+			visited[rp.vname] = true;
+
+			// printing
+			if (rp.avname != 0)
+				System.out.println(rp);
+
+			// nbrs
+			for (int nbr : map.get(rp.vname).keySet()) {
+
+				if (!visited[nbr]) {
+
+					PrimsPair np = new PrimsPair(nbr, rp.vname, map.get(rp.vname).get(nbr));
+					pq.add(np);
+				}
+			}
+
+		}
+
+	}
+	
+	private class DijkstraPair implements Comparable<DijkstraPair> {
+		int vname;
+		String path ;
+		int cost;
+
+		public DijkstraPair(int vname, String path, int cost) {
+
+			this.vname = vname;
+			this.path = path;
+			this.cost = cost;
+		}
+
+		@Override
+		public String toString() {
+			return vname + " via " + path + " @ " + cost;
+		}
+
+		@Override
+		public int compareTo(DijkstraPair o) {
+			return this.cost - o.cost;
+		}
+	}
+
+	public void dijkstra(int src) {
+
+		boolean[] visited = new boolean[map.size() + 1];
+
+		PriorityQueue<DijkstraPair> pq = new PriorityQueue<>();
+
+		DijkstraPair sp = new DijkstraPair(src, src + "", 0);
+		pq.add(sp);
+
+		while (!pq.isEmpty()) {
+
+			// remove
+			DijkstraPair rp = pq.remove();
+
+			// already visited , ignore
+			if (visited[rp.vname])
+				continue;
+
+			// visited
+			visited[rp.vname] = true;
+
+			// printing
+			System.out.println(rp);
+
+			// nbrs
+			for (int nbr : map.get(rp.vname).keySet()) {
+
+				if (!visited[nbr]) {
+
+					DijkstraPair np = new DijkstraPair(nbr, rp.path + nbr, rp.cost + map.get(rp.vname).get(nbr));
+					pq.add(np);
+				}
+			}
+
+		}
 
 	}
 
