@@ -1,6 +1,7 @@
 package L63_Graph;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,7 +26,7 @@ public class Graph {
 	public void addEdge(int v1, int v2, int cost) {
 
 		map.get(v1).put(v2, cost);
-		map.get(v2).put(v1, cost);
+//		map.get(v2).put(v1, cost);
 
 	}
 
@@ -684,10 +685,10 @@ public class Graph {
 		}
 
 	}
-	
+
 	private class DijkstraPair implements Comparable<DijkstraPair> {
 		int vname;
-		String path ;
+		String path;
 		int cost;
 
 		public DijkstraPair(int vname, String path, int cost) {
@@ -742,6 +743,95 @@ public class Graph {
 				}
 			}
 
+		}
+
+	}
+
+	public void bellmanFord(int src) {
+
+		int V = map.size();
+
+		int[] dist = new int[V + 1];
+		Arrays.fill(dist, 100000);
+		dist[src] = 0;
+
+		ArrayList<EdgePair> edges = getAllEdges();
+
+		for (int relax = 1; relax <= V; relax++) {
+
+			for (EdgePair edge : edges) {
+
+				int oc = dist[edge.v2];
+				int nc = dist[edge.v1] + edge.cost;
+
+				if (oc > nc) {
+
+					if (relax <= V - 1)
+						dist[edge.v2] = nc;
+					else {
+						System.out.println("-ve wt cycle is present");
+						return;
+					}
+				}
+
+			}
+		}
+
+		for (int i = 1; i <= V; i++) {
+			System.out.println(i + " -> " + dist[i]);
+		}
+
+	}
+
+	public void floydWarshall() {
+
+		int V = map.size();
+
+		int[][] dist = new int[V + 1][V + 1];
+
+		for (int i = 1; i <= V; i++) {
+			for (int j = 1; j <= V; j++) {
+
+				if (i == j)
+					dist[i][j] = 0;
+				else
+					dist[i][j] = 100000;
+			}
+		}
+
+		// add cost of edges in dist matrix
+		for (int i = 1; i <= V; i++) {
+			for (int nbr : map.get(i).keySet()) {
+				dist[i][nbr] = map.get(i).get(nbr);
+			}
+		}
+
+		for (int v = 1; v <= V; v++) {
+
+			for (int r = 1; r <= V; r++) {
+
+				for (int c = 1; c <= V; c++) {
+
+					int oc = dist[r][c];
+					int nc = dist[r][v] + dist[v][c];
+
+					if (nc < oc) {
+						dist[r][c] = nc;
+					}
+
+				}
+			}
+
+		}
+
+		// printing
+		for (int r = 1; r <= V; r++) {
+			
+			for (int c = 1; c <= V; c++) {		
+				System.out.print(dist[r][c] + "\t");
+			}
+			
+			System.out.println();
 		}
 
 	}
